@@ -130,3 +130,71 @@ WEEK II
 FRONTEND
 
 Este avance corresponde al area FRONTEND WEEK II y fue desarrolado en la rama feature/frontend-tree-view.
+
+
+
+## Guía de ejecución Docker - ARLI WEEK II
+
+Esta sección documenta la preparación del entorno reproducible del proyecto mediante Docker y Docker Compose.
+
+### Objetivo
+
+Automatizar la ejecución del entorno del proyecto para facilitar la integración entre backend, PostgreSQL y MongoDB.
+
+### Requisitos previos
+
+- Docker Desktop instalado.
+- WSL 2 habilitado en Windows.
+- Virtualización activada en BIOS.
+- Git instalado.
+- Proyecto clonado desde GitHub.
+
+### Servicios planificados
+
+El entorno Docker debe contemplar los siguientes servicios:
+
+- `app`: aplicación backend Spring Boot.
+- `postgres`: base de datos PostgreSQL.
+- `mongo`: base de datos MongoDB.
+
+### Puertos del entorno
+
+| Servicio | Puerto |
+|---|---|
+| Backend Spring Boot | 8080 |
+| PostgreSQL | 5432 |
+| MongoDB | 27017 |
+| Frontend React/Vite | 5173 |
+
+### Variables de entorno esperadas
+
+| Variable | Descripción |
+|---|---|
+| `SPRING_PROFILES_ACTIVE` | Define el perfil activo de Spring |
+| `POSTGRES_DB` | Nombre de la base de datos PostgreSQL |
+| `POSTGRES_USER` | Usuario de PostgreSQL |
+| `POSTGRES_PASSWORD` | Contraseña de PostgreSQL |
+| `MONGO_INITDB_DATABASE` | Base de datos inicial de MongoDB |
+
+### Archivos Docker planificados
+
+```text
+Dockerfile
+.dockerignore
+docker-compose.yml
+Comandos esperados
+
+Levantar el entorno completo:
+
+docker compose up --build
+
+Detener los servicios:
+
+docker compose down
+
+Ver contenedores activos:
+
+docker ps
+Observación
+
+Esta documentación corresponde al avance de ARLI en WEEK II para Docker, README y automatización del entorno. La validación completa con docker compose up dependerá de que Docker Desktop funcione correctamente en el equipo local.
