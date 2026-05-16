@@ -1,0 +1,51 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: restaurant-tree-postgres
+    environment:
+      POSTGRES_DB: restaurant_tree
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - restaurant-tree-network
+
+  mongo:
+    image: mongo:7
+    container_name: restaurant-tree-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - restaurant-tree-network
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restaurant-tree-app
+    depends_on:
+      - postgres
+      - mongo
+    environment:
+      SPRING_PROFILES_ACTIVE: memory
+      POSTGRES_DB: restaurant_tree
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      MONGO_INITDB_DATABASE: restaurant_tree
+    ports:
+      - "8080:8080"
+    networks:
+      - restaurant-tree-network
+
+volumes:
+  postgres_data:
+  mongo_data:
+
+networks:
+  restaurant-tree-network:
+    driver: bridge
