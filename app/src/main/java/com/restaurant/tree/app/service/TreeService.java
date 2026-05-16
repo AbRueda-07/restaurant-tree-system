@@ -4,18 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.restaurant.tree.app.repository.MemoryTreeRepository;
 import com.restaurant.tree.engine.custom.CustomTreeStrategy;
 import com.restaurant.tree.engine.model.TreeNode;
 import com.restaurant.tree.engine.strategy.TreeAlgorithmStrategy;
+import com.restaurant.tree.app.persistence.TreeRepository;
 
 @Service
 public class TreeService {
 
     private final TreeAlgorithmStrategy strategy;
-    private final MemoryTreeRepository repository;
-
-    public TreeService(MemoryTreeRepository repository) {
+    private final TreeRepository repository;
+    
+    public TreeService(TreeRepository repository) {
 
         this.strategy = new CustomTreeStrategy();
         this.repository = repository;
@@ -25,14 +25,13 @@ public class TreeService {
 
         TreeNode root = strategy.createRoot(id, value);
 
-        repository.save(root);
-
+        repository.saveTree(root);
         return root;
     }
 
     public TreeNode addChild(Long parentId, Long childId, String childValue) {
 
-        TreeNode parent = repository.findById(parentId);
+        TreeNode parent = repository.findTree();
 
         if (parent == null) {
             return null;
@@ -40,40 +39,40 @@ public class TreeService {
 
         TreeNode child = strategy.addChild(parent, childId, childValue);
 
-        repository.save(parent);
+        repository.saveTree(parent);
 
         return child;
     }
 
     public TreeNode findTree(Long id) {
 
-        return repository.findById(id);
+        return repository.findTree();
     }
 
     public List<TreeNode> dfs(Long rootId) {
 
-        TreeNode root = repository.findById(rootId);
+        TreeNode root = repository.findTree();
 
         return strategy.dfsTraversal(root);
     }
 
     public List<TreeNode> bfs(Long rootId) {
 
-        TreeNode root = repository.findById(rootId);
+        TreeNode root = repository.findTree();
 
         return strategy.bfsTraversal(root);
     }
 
     public int height(Long rootId) {
 
-        TreeNode root = repository.findById(rootId);
+        TreeNode root = repository.findTree();
 
         return strategy.calculateHeight(root);
     }
 
     public boolean validate(Long rootId) {
 
-        TreeNode root = repository.findById(rootId);
+        TreeNode root = repository.findTree();
 
         return strategy.validateNoCycles(root);
     }
