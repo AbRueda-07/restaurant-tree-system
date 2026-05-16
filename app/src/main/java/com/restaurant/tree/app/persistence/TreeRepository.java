@@ -1,11 +1,14 @@
 package com.restaurant.tree.app.persistence;
 
+import java.util.Map;
+
 import com.restaurant.tree.engine.model.TreeNode;
 
 public interface TreeRepository {
 
-    TreeNode findTree();
+    void save(TreeNode root);
 
-    void saveTree(TreeNode root);
+    TreeNode findById(Long id);
 
+    Map<Long, TreeNode> findAll();
 }

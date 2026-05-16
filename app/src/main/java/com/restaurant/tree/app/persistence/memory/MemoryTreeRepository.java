@@ -14,17 +14,18 @@ public class MemoryTreeRepository implements TreeRepository {
     private final Map<Long, TreeNode> trees = new HashMap<>();
 
     @Override
-    public void saveTree(TreeNode root) {
+    public void save(TreeNode root) {
 
         trees.put(root.getId(), root);
     }
 
     @Override
-    public TreeNode findTree() {
+    public TreeNode findById(Long id) {
 
-        return trees.values().stream().findFirst().orElse(null);
+        return trees.get(id);
     }
 
+    @Override
     public Map<Long, TreeNode> findAll() {
 
         return trees;
