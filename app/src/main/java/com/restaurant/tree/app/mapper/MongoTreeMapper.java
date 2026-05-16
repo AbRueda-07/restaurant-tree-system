@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.restaurant.tree.app.repository.mongo.MongoTreeDocument;
+import com.restaurant.tree.app.document.MongoTreeDocument;
 import com.restaurant.tree.engine.model.TreeNode;
 
 @Component
@@ -18,7 +18,7 @@ public class MongoTreeMapper {
         }
 
         MongoTreeDocument document =
-                new MongoTreeDocument(node.getId(), node.getValue());
+                new MongoTreeDocument(String.valueOf(node.getId()), node.getValue());
 
         List<MongoTreeDocument> children = new ArrayList<>();
 
@@ -38,7 +38,7 @@ public class MongoTreeMapper {
         }
 
         TreeNode node =
-                new TreeNode(document.getId(), document.getValue());
+                new TreeNode(Long.valueOf(document.getId()), document.getValue());
 
         List<TreeNode> children = new ArrayList<>();
 
