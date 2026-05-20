@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.restaurant.tree.app.repository.MemoryTreeRepository;
+import com.restaurant.tree.app.persistence.TreeRepository;
 import com.restaurant.tree.engine.custom.CustomTreeStrategy;
 import com.restaurant.tree.engine.model.TreeNode;
 import com.restaurant.tree.engine.strategy.TreeAlgorithmStrategy;
@@ -13,9 +13,9 @@ import com.restaurant.tree.engine.strategy.TreeAlgorithmStrategy;
 public class TreeService {
 
     private final TreeAlgorithmStrategy strategy;
-    private final MemoryTreeRepository repository;
+    private final TreeRepository repository;
 
-    public TreeService(MemoryTreeRepository repository) {
+    public TreeService(TreeRepository repository) {
 
         this.strategy = new CustomTreeStrategy();
         this.repository = repository;
@@ -45,7 +45,7 @@ public class TreeService {
         return child;
     }
 
-    public TreeNode findTree(Long id) {
+    public TreeNode findById(Long id) {
 
         return repository.findById(id);
     }
