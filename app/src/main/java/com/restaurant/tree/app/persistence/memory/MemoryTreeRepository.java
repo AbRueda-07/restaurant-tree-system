@@ -5,10 +5,15 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import com.restaurant.tree.app.persistence.TreeRepository;
 import com.restaurant.tree.engine.model.TreeNode;
 
 @Repository
+@ConditionalOnProperty(
+	    name = "app.storage",
+	    havingValue = "memory"
+	)
 public class MemoryTreeRepository implements TreeRepository {
 
     private final Map<Long, TreeNode> trees = new HashMap<>();
