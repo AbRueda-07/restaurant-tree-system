@@ -64,6 +64,6 @@ public class TreeController {
     @GetMapping("/{rootId}")
     public TreeNode findTree(@PathVariable Long rootId) {
 
-        return treeService.findTree(rootId);
+        return treeService.findById(rootId);
     }
 }
