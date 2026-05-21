@@ -14,7 +14,8 @@ Contains:
 - Spring Boot API
 - controllers
 - services
-- repositories
+- persistence abstraction
+- persistence adapters
 - DTOs
 - integration layer
 
@@ -31,6 +32,8 @@ Implemented:
 - Cycle validation
 - REST endpoints
 - Memory persistence
+- Dynamic storage selector
+- OpenAPI/Swagger dependency
 
 ---
 
@@ -39,7 +42,5 @@ Implemented:
 Pending:
 - PostgreSQL persistence
 - MongoDB persistence
-- OpenAPI/Swagger
-- Dynamic storage selector
 - Frontend visualization
 - End-to-end testing
