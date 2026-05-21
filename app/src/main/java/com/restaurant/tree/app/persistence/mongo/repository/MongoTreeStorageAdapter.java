@@ -1,4 +1,4 @@
-package com.restaurant.tree.app.repository.mongo;
+package com.restaurant.tree.app.persistence.mongo.repository;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Repository;
 
-import com.restaurant.tree.app.mapper.MongoTreeMapper;
+import com.restaurant.tree.app.persistence.mongo.mapper.MongoTreeMapper;
 import com.restaurant.tree.app.repository.TreeStorageRepository;
 import com.restaurant.tree.engine.model.TreeNode;
 

@@ -1,4 +1,4 @@
-package com.restaurant.tree.app.document;
+package com.restaurant.tree.app.persistence.mongo.document;
 
 import java.util.ArrayList;
 import java.util.List;

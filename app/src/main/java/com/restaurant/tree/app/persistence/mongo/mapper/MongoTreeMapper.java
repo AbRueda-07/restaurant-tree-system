@@ -1,11 +1,11 @@
-package com.restaurant.tree.app.mapper;
+package com.restaurant.tree.app.persistence.mongo.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.restaurant.tree.app.document.MongoTreeDocument;
+import com.restaurant.tree.app.persistence.mongo.document.MongoTreeDocument;
 import com.restaurant.tree.engine.model.TreeNode;
 
 @Component
