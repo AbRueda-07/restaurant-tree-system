@@ -1,4 +1,4 @@
-package com.restaurant.tree.app.repository;
+package com.restaurant.tree.app.persistence.postgres;
 
 
 import com.restaurant.tree.app.persistence.entity.NodeEntity;
