@@ -22,6 +22,7 @@ public class NodeEntity {
     @JoinColumn(name = "parent_id")
     private NodeEntity parent;
 
+    
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NodeEntity> children = new ArrayList<>();
 

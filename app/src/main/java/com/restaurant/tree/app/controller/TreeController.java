@@ -1,10 +1,14 @@
 package com.restaurant.tree.app.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.*;
 
+
 import com.restaurant.tree.app.dto.TreeNodeRequest;
+import com.restaurant.tree.app.dto.TreeNodeResponse;
+import com.restaurant.tree.app.mapper.NodeResponseMapper;
 import com.restaurant.tree.app.service.TreeService;
 import com.restaurant.tree.engine.model.TreeNode;
 
@@ -15,55 +19,59 @@ public class TreeController {
     private final TreeService treeService;
 
     public TreeController(TreeService treeService) {
-
         this.treeService = treeService;
     }
 
     @PostMapping("/root")
-    public TreeNode createRoot(@RequestBody TreeNodeRequest request) {
-
-        return treeService.createRoot(request.getId(), request.getValue());
+    public TreeNodeResponse createRoot(@RequestBody TreeNodeRequest request) {
+        TreeNode root = treeService.createRoot(request.getId(), request.getValue());
+        return NodeResponseMapper.toResponse(root);
     }
 
     @PostMapping("/{parentId}/child")
-    public TreeNode addChild(
+    public TreeNodeResponse addChild(
             @PathVariable Long parentId,
             @RequestBody TreeNodeRequest request) {
 
-        return treeService.addChild(
+        TreeNode child = treeService.addChild(
                 parentId,
                 request.getId(),
                 request.getValue()
         );
+        return NodeResponseMapper.toResponse(child);
     }
 
     @GetMapping("/{rootId}/dfs")
-    public List<TreeNode> dfs(@PathVariable Long rootId) {
-
-        return treeService.dfs(rootId);
+    public List<TreeNodeResponse> dfs(@PathVariable Long rootId) {
+        List<TreeNode> nodes = treeService.dfs(rootId);
+        // Usamos una lambda explícita para que Java entienda el mapeo perfectamente
+        return nodes.stream()
+                .map(node -> NodeResponseMapper.toResponse(node))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{rootId}/bfs")
-    public List<TreeNode> bfs(@PathVariable Long rootId) {
-
-        return treeService.bfs(rootId);
+    public List<TreeNodeResponse> bfs(@PathVariable Long rootId) {
+        List<TreeNode> nodes = treeService.bfs(rootId);
+        // Lo mismo aquí
+        return nodes.stream()
+                .map(node -> NodeResponseMapper.toResponse(node))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{rootId}/height")
     public int height(@PathVariable Long rootId) {
-
         return treeService.height(rootId);
     }
 
     @GetMapping("/{rootId}/validate")
     public boolean validate(@PathVariable Long rootId) {
-
         return treeService.validate(rootId);
     }
     
     @GetMapping("/{rootId}")
-    public TreeNode findTree(@PathVariable Long rootId) {
-
-        return treeService.findById(rootId);
+    public TreeNodeResponse findTree(@PathVariable Long rootId) {
+        TreeNode root = treeService.findById(rootId);
+        return NodeResponseMapper.toResponse(root);
     }
 }
