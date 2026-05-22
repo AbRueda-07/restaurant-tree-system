@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.restaurant.tree.app.persistence.TreeRepository;
-import com.restaurant.tree.engine.custom.CustomTreeStrategy;
 import com.restaurant.tree.engine.model.TreeNode;
 import com.restaurant.tree.engine.strategy.TreeAlgorithmStrategy;
 
@@ -15,10 +14,12 @@ public class TreeService {
     private final TreeAlgorithmStrategy strategy;
     private final TreeRepository repository;
 
-    public TreeService(TreeRepository repository) {
-
-        this.strategy = new CustomTreeStrategy();
+    public TreeService(
+            TreeRepository repository,
+            TreeAlgorithmStrategy strategy
+    ) {
         this.repository = repository;
+        this.strategy = strategy;
     }
 
     public TreeNode createRoot(Long id, String value) {
