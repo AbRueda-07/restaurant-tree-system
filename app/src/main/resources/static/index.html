@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Tree System</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Restaurant Tree System</h1>
+    <p>Frontend funcional mínimo para probar árbol, recorridos y validaciones.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Configuración visual</h2>
+
+      <label for="strategySelect">Strategy</label>
+      <select id="strategySelect">
+        <option value="custom">custom</option>
+        <option value="collections">collections</option>
+      </select>
+
+      <label for="storageSelect">Storage</label>
+      <select id="storageSelect">
+        <option value="memory">memory</option>
+        <option value="postgres">postgres</option>
+        <option value="mongo">mongo</option>
+      </select>
+
+      <p class="note">
+        Estos selectores son visuales por ahora. El frontend consume los endpoints actuales del backend.
+      </p>
+    </section>
+
+    <section class="panel">
+      <h2>Crear raíz</h2>
+
+      <label for="rootId">ID raíz</label>
+      <input id="rootId" type="number" placeholder="Ej: 1" />
+
+      <label for="rootValue">Nombre raíz</label>
+      <input id="rootValue" type="text" placeholder="Ej: Menú principal" />
+
+      <button onclick="createRoot()">Crear raíz</button>
+    </section>
+
+    <section class="panel">
+      <h2>Agregar hijo</h2>
+
+      <label for="parentId">ID padre</label>
+      <input id="parentId" type="number" placeholder="Ej: 1" />
+
+      <label for="childId">ID hijo</label>
+      <input id="childId" type="number" placeholder="Ej: 2" />
+
+      <label for="childValue">Nombre hijo</label>
+      <input id="childValue" type="text" placeholder="Ej: Entradas" />
+
+      <button onclick="addChild()">Agregar hijo</button>
+    </section>
+
+    <section class="panel">
+      <h2>Consultar árbol</h2>
+
+      <label for="queryRootId">ID raíz a consultar</label>
+      <input id="queryRootId" type="number" placeholder="Ej: 1" />
+
+      <div class="button-row">
+        <button onclick="getTree()">Obtener árbol</button>
+        <button onclick="runDfs()">DFS</button>
+        <button onclick="runBfs()">BFS</button>
+        <button onclick="getHeight()">Altura</button>
+        <button onclick="validateTree()">Validar</button>
+      </div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Árbol visual</h2>
+      <div id="treeView" class="tree-box">Aún no hay árbol cargado.</div>
+    </section>
+
+    <section class="panel wide">
+      <h2>Resultado</h2>
+      <pre id="resultBox">Sin resultados todavía.</pre>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
