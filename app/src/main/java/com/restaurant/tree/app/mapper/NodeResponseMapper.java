@@ -37,4 +37,10 @@ public class NodeResponseMapper {
 
         return response;
     }
+
+    public static TraversalNodeResponse toTraversalDto(TreeNode node) {
+        if (node == null) return null;
+
+        return new TraversalNodeResponse(node.getId(), node.getValue());
+    }
 }
