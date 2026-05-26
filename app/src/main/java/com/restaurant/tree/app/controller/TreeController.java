@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.*;
 
-
+import com.restaurant.tree.app.dto.TraversalNodeResponse;
 import com.restaurant.tree.app.dto.TreeNodeRequest;
 import com.restaurant.tree.app.dto.TreeNodeResponse;
 import com.restaurant.tree.app.mapper.NodeResponseMapper;
@@ -42,23 +42,20 @@ public class TreeController {
     }
 
     @GetMapping("/{rootId}/dfs")
-    public List<TreeNodeResponse> dfs(@PathVariable Long rootId) {
+    public List<TraversalNodeResponse> dfs(@PathVariable Long rootId) {
         List<TreeNode> nodes = treeService.dfs(rootId);
-        // Usamos una lambda explícita para que Java entienda el mapeo perfectamente
         return nodes.stream()
-                .map(node -> NodeResponseMapper.toResponse(node))
+                .map(node -> NodeResponseMapper.toTraversalDto(node))
                 .collect(Collectors.toList());
     }
 
     @GetMapping("/{rootId}/bfs")
-    public List<TreeNodeResponse> bfs(@PathVariable Long rootId) {
+    public List<TraversalNodeResponse> bfs(@PathVariable Long rootId) {
         List<TreeNode> nodes = treeService.bfs(rootId);
-        // Lo mismo aquí
         return nodes.stream()
-                .map(node -> NodeResponseMapper.toResponse(node))
+                .map(node -> NodeResponseMapper.toTraversalDto(node))
                 .collect(Collectors.toList());
     }
-
     @GetMapping("/{rootId}/height")
     public int height(@PathVariable Long rootId) {
         return treeService.height(rootId);
