@@ -86,4 +86,11 @@ public class MemoryTreeRepository implements TreeRepository {
 
         return null;
     }
+    
+    @Override
+    public void deleteById(Long id) {
+        if (this.trees != null) {
+            this.trees.remove(id);
+        }
+    }
 }

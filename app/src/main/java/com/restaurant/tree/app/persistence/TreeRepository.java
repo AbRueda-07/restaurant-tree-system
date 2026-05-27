@@ -11,4 +11,6 @@ public interface TreeRepository {
     TreeNode findById(Long id);
 
     Map<Long, TreeNode> findAll();
+    
+    void deleteById(Long id);
 }

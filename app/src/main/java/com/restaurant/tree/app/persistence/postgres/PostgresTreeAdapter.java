@@ -83,4 +83,13 @@ public class PostgresTreeAdapter implements TreeRepository {
 
         return entity;
     }
+
+    @Override
+    public void deleteById(Long id) {
+        if (id != null && nodeRepository.existsById(id)) {
+            nodeRepository.deleteById(id);
+        }
+    }
+    
+    
 }
