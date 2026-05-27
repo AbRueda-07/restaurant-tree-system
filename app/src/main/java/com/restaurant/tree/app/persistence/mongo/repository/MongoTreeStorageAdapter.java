@@ -47,4 +47,14 @@ public class MongoTreeStorageAdapter implements TreeRepository {
                 .map(mongoTreeMapper::toTreeNode)
                 .collect(Collectors.toMap(TreeNode::getId, tree -> tree));
     }
+
+    @Override
+    public void deleteById(Long id) {
+        if (id != null) {
+            String stringId = String.valueOf(id);
+            if (mongoTreeRepository.existsById(stringId)) {
+                mongoTreeRepository.deleteById(stringId);
+            }
+        }
+    }
 }
