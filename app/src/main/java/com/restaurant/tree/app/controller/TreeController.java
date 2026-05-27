@@ -3,6 +3,7 @@ package com.restaurant.tree.app.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.restaurant.tree.app.dto.TraversalNodeResponse;
@@ -70,5 +71,35 @@ public class TreeController {
     public TreeNodeResponse findTree(@PathVariable Long rootId) {
         TreeNode root = treeService.findById(rootId);
         return NodeResponseMapper.toResponse(root);
+    }
+    
+    
+    @PutMapping("/{id}")
+    public TreeNodeResponse updateNode(
+            @PathVariable Long id,
+            @RequestBody TreeNodeRequest request) {
+        TreeNode updated = treeService.updateNode(id, request.getValue());
+        return NodeResponseMapper.toResponse(updated);
+    }
+
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteNode(@PathVariable Long id) {
+        treeService.deleteNode(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    
+    @GetMapping("/{id}/children")
+    public List<TraversalNodeResponse> getChildren(@PathVariable Long id) {
+        List<TreeNode> children = treeService.getChildren(id);
+        return children.stream()
+                .map(NodeResponseMapper::toTraversalDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}/exists")
+    public boolean exists(@PathVariable Long id) {
+        return treeService.exists(id);
     }
 }
