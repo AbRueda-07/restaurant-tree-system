@@ -4,8 +4,10 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: restaurant-tree-app
+
     ports:
       - "${APP_PORT:-8080}:8080"
+
     environment:
       SERVER_PORT: 8080
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-mongo}
@@ -14,29 +16,51 @@ services:
       POSTGRES_URL: jdbc:postgresql://postgres:5432/restaurant_tree_db
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+
     depends_on:
-      - mongodb
-      - postgres
+      mongodb:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
 
   mongodb:
     image: mongo:7
     container_name: restaurant-tree-mongodb
+
     ports:
       - "${MONGO_PORT:-27018}:27017"
+
     volumes:
       - mongodb_data:/data/db
+
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
   postgres:
     image: postgres:17
     container_name: restaurant-tree-postgres
+
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
+
     environment:
       POSTGRES_DB: restaurant_tree_db
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d restaurant_tree_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
 
 volumes:
   mongodb_data:
