@@ -1,0 +1,9 @@
+.git
+.mvn/wrapper/maven-wrapper.jar
+**/target
+**/.settings
+**/.classpath
+**/.project
+*.log
+*.tmp
+*.zip
