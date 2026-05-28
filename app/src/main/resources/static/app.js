@@ -24,7 +24,11 @@ function showResult(data, isError = false) {
   const resultBox = document.getElementById("resultBox");
   resultBox.className = isError ? "error" : "success";
 
-  if (typeof data === "string" || typeof data === "number" || typeof data === "boolean") {
+  if (
+    typeof data === "string" ||
+    typeof data === "number" ||
+    typeof data === "boolean"
+  ) {
     resultBox.textContent = String(data);
     return;
   }
@@ -33,6 +37,7 @@ function showResult(data, isError = false) {
 }
 
 function showError(error) {
+  console.error(error);
   showResult(error.message || "Error inesperado.", true);
 }
 
@@ -96,6 +101,86 @@ async function addChild() {
     const rootId = document.getElementById("queryRootId").value || parentId;
     document.getElementById("queryRootId").value = rootId;
     await getTree();
+  } catch (error) {
+    showError(error);
+  }
+}
+
+async function updateNode() {
+  try {
+    const id = getNumberInput("updateNodeId", "ID nodo");
+    const value = getTextInput("updateNodeValue", "Nuevo nombre");
+
+    const data = await requestJson(`${API_BASE}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ id, value })
+    });
+
+    showResult(data);
+
+    const rootId = document.getElementById("queryRootId").value;
+    if (rootId) {
+      await getTree();
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+async function deleteNode() {
+  try {
+    const id = getNumberInput("nodeActionId", "ID nodo");
+
+    const confirmed = confirm(`¿Seguro que deseas eliminar el nodo con ID ${id}?`);
+
+    if (!confirmed) {
+      showResult("Eliminación cancelada.");
+      return;
+    }
+
+    await requestJson(`${API_BASE}/${id}`, {
+      method: "DELETE"
+    });
+
+    showResult(`Nodo con ID ${id} eliminado correctamente.`);
+
+    const rootId = document.getElementById("queryRootId").value;
+    if (rootId && Number(rootId) !== id) {
+      await getTree();
+    } else {
+      document.getElementById("treeView").textContent = "Árbol eliminado o sin datos cargados.";
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+async function getChildren() {
+  try {
+    const id = getNumberInput("nodeActionId", "ID nodo");
+
+    const data = await requestJson(`${API_BASE}/${id}/children`);
+
+    showResult(data);
+
+    if (Array.isArray(data) && data.length === 0) {
+      showResult(`El nodo con ID ${id} no tiene hijos directos.`);
+    }
+  } catch (error) {
+    showError(error);
+  }
+}
+
+async function checkExists() {
+  try {
+    const id = getNumberInput("nodeActionId", "ID nodo");
+
+    const data = await requestJson(`${API_BASE}/${id}/exists`);
+
+    showResult(`El nodo con ID ${id} existe: ${data}`);
   } catch (error) {
     showError(error);
   }

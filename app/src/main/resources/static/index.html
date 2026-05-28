@@ -9,7 +9,7 @@
 <body>
   <header>
     <h1>Restaurant Tree System</h1>
-    <p>Frontend funcional mínimo para probar árbol, recorridos y validaciones.</p>
+    <p>Frontend funcional mínimo para probar árbol, recorridos, validaciones y endpoints REST finales.</p>
   </header>
 
   <main>
@@ -17,20 +17,20 @@
       <h2>Configuración visual</h2>
 
       <label for="strategySelect">Strategy</label>
-      <select id="strategySelect">
+      <select id="strategySelect" disabled>
         <option value="custom">custom</option>
         <option value="collections">collections</option>
       </select>
 
       <label for="storageSelect">Storage</label>
-      <select id="storageSelect">
+      <select id="storageSelect" disabled>
         <option value="memory">memory</option>
         <option value="postgres">postgres</option>
         <option value="mongo">mongo</option>
       </select>
 
       <p class="note">
-        Estos selectores son visuales por ahora. El frontend consume los endpoints actuales del backend.
+        Runtime switching controlado desde backend profiles. Estos selectores son únicamente informativos.
       </p>
     </section>
 
@@ -59,6 +59,31 @@
       <input id="childValue" type="text" placeholder="Ej: Entradas" />
 
       <button onclick="addChild()">Agregar hijo</button>
+    </section>
+
+    <section class="panel">
+      <h2>Actualizar nodo</h2>
+
+      <label for="updateNodeId">ID nodo</label>
+      <input id="updateNodeId" type="number" placeholder="Ej: 2" />
+
+      <label for="updateNodeValue">Nuevo nombre</label>
+      <input id="updateNodeValue" type="text" placeholder="Ej: Bebidas" />
+
+      <button onclick="updateNode()">Actualizar nodo</button>
+    </section>
+
+    <section class="panel">
+      <h2>Eliminar / consultar nodo</h2>
+
+      <label for="nodeActionId">ID nodo</label>
+      <input id="nodeActionId" type="number" placeholder="Ej: 2" />
+
+      <div class="button-row">
+        <button onclick="deleteNode()">Eliminar nodo</button>
+        <button onclick="getChildren()">Ver hijos directos</button>
+        <button onclick="checkExists()">Verificar existencia</button>
+      </div>
     </section>
 
     <section class="panel">
