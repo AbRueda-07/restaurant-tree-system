@@ -126,7 +126,75 @@ public class TreeService {
 
         return bestMatch;
     }
+    
+   
+    public TreeNode updateNode(Long id, String newValue) {
+        LocatedNode located = findPersistedNodeWithOwner(id);
+        
+        
+        if (located == null) {
+            TreeNode root = repository.findById(id);
+            if (root != null) {
+                located = new LocatedNode(root, root);
+            }
+        }
 
+        if (located == null) {
+            throw new IllegalArgumentException("No se encontró el nodo con ID: " + id);
+        }
+
+        
+        located.node.setValue(newValue);
+
+        
+        repository.save(located.root);
+
+        return located.node;
+    }
+
+    
+    public void deleteNode(Long id) {
+        LocatedNode located = findPersistedNodeWithOwner(id);
+
+        if (located == null) {
+            
+            TreeNode root = repository.findById(id);
+            if (root != null) {
+                repository.deleteById(id);
+                return;
+            }
+            throw new IllegalArgumentException("No se pudo eliminar: No existe el nodo con ID " + id);
+        }
+
+        TreeNode nodeToDelete = located.node;
+        TreeNode parent = nodeToDelete.getParent();
+
+        if (parent != null) {
+            
+            parent.getChildren().remove(nodeToDelete);
+            nodeToDelete.setParent(null);
+            
+            
+            repository.save(located.root);
+        } else {
+            
+            repository.deleteById(id);
+        }
+    }
+
+   
+    public List<TreeNode> getChildren(Long id) {
+        TreeNode node = findById(id);
+        if (node == null) {
+            throw new IllegalArgumentException("No se encontró el nodo con ID: " + id);
+        }
+        return node.getChildren();
+    }
+
+    
+    public boolean exists(Long id) {
+        return findById(id) != null;
+    }
     private LocatedNode findNode(TreeNode currentNode, Long nodeId, TreeNode ownerRoot) {
 
         if (currentNode == null) {

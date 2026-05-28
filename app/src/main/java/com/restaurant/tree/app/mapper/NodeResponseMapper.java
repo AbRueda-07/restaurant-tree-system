@@ -25,7 +25,7 @@ public class NodeResponseMapper {
     public static TreeNodeResponse toResponse(TreeNode node) {
         if (node == null) return null;
 
-        // Cree el DTO plano (sin padre)
+        // Crea el DTO plano (sin padre)
         TreeNodeResponse response = new TreeNodeResponse(node.getId(), node.getValue());
 
         // Mapea recursivamente a los hijos
@@ -38,4 +38,3 @@ public class NodeResponseMapper {
         return response;
     }
 }
-
