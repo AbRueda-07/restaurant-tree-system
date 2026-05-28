@@ -5,6 +5,9 @@ WORKDIR /workspace
 COPY pom.xml .
 COPY tree-engine/pom.xml tree-engine/pom.xml
 COPY app/pom.xml app/pom.xml
+
+RUN mvn dependency:go-offline
+
 COPY tree-engine/src tree-engine/src
 COPY app/src app/src
 
