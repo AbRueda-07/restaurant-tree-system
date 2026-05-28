@@ -37,6 +37,7 @@ function showResult(data, isError = false) {
 }
 
 function showError(error) {
+  console.error(error);
   showResult(error.message || "Error inesperado.", true);
 }
 

@@ -17,20 +17,20 @@
       <h2>Configuración visual</h2>
 
       <label for="strategySelect">Strategy</label>
-      <select id="strategySelect">
+      <select id="strategySelect" disabled>
         <option value="custom">custom</option>
         <option value="collections">collections</option>
       </select>
 
       <label for="storageSelect">Storage</label>
-      <select id="storageSelect">
+      <select id="storageSelect" disabled>
         <option value="memory">memory</option>
         <option value="postgres">postgres</option>
         <option value="mongo">mongo</option>
       </select>
 
       <p class="note">
-        Estos selectores son visuales por ahora. El frontend consume los endpoints actuales del backend.
+        Runtime switching controlado desde backend profiles. Estos selectores son únicamente informativos.
       </p>
     </section>
 
