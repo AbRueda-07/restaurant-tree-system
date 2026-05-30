@@ -1,117 +1,248 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Restaurant Tree System</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1>Restaurant Tree System</h1>
-    <p>Frontend funcional mínimo para probar árbol, recorridos, validaciones y endpoints REST finales.</p>
-  </header>
 
-  <main>
-    <section class="panel">
-      <h2>Configuración visual</h2>
+<header>
+  <h1>Restaurant Tree System</h1>
+  <p>Frontend funcional mínimo para probar árbol, recorridos, validaciones y endpoints REST finales.</p>
+</header>
 
-      <label for="strategySelect">Strategy</label>
-      <select id="strategySelect" disabled>
-        <option value="custom">custom</option>
-        <option value="collections">collections</option>
-      </select>
+<main>
 
-      <label for="storageSelect">Storage</label>
-      <select id="storageSelect" disabled>
-        <option value="memory">memory</option>
-        <option value="postgres">postgres</option>
-        <option value="mongo">mongo</option>
-      </select>
+  <!-- DASHBOARD -->
+  <section class="panel wide">
 
-      <p class="note">
-        Runtime switching controlado desde backend profiles. Estos selectores son únicamente informativos.
-      </p>
-    </section>
+    <h2>📊 Estado del Sistema</h2>
 
-    <section class="panel">
-      <h2>Crear raíz</h2>
+    <div class="stats">
 
-      <label for="rootId">ID raíz</label>
-      <input id="rootId" type="number" placeholder="Ej: 1" />
-
-      <label for="rootValue">Nombre raíz</label>
-      <input id="rootValue" type="text" placeholder="Ej: Menú principal" />
-
-      <button onclick="createRoot()">Crear raíz</button>
-    </section>
-
-    <section class="panel">
-      <h2>Agregar hijo</h2>
-
-      <label for="parentId">ID padre</label>
-      <input id="parentId" type="number" placeholder="Ej: 1" />
-
-      <label for="childId">ID hijo</label>
-      <input id="childId" type="number" placeholder="Ej: 2" />
-
-      <label for="childValue">Nombre hijo</label>
-      <input id="childValue" type="text" placeholder="Ej: Entradas" />
-
-      <button onclick="addChild()">Agregar hijo</button>
-    </section>
-
-    <section class="panel">
-      <h2>Actualizar nodo</h2>
-
-      <label for="updateNodeId">ID nodo</label>
-      <input id="updateNodeId" type="number" placeholder="Ej: 2" />
-
-      <label for="updateNodeValue">Nuevo nombre</label>
-      <input id="updateNodeValue" type="text" placeholder="Ej: Bebidas" />
-
-      <button onclick="updateNode()">Actualizar nodo</button>
-    </section>
-
-    <section class="panel">
-      <h2>Eliminar / consultar nodo</h2>
-
-      <label for="nodeActionId">ID nodo</label>
-      <input id="nodeActionId" type="number" placeholder="Ej: 2" />
-
-      <div class="button-row">
-        <button onclick="deleteNode()">Eliminar nodo</button>
-        <button onclick="getChildren()">Ver hijos directos</button>
-        <button onclick="checkExists()">Verificar existencia</button>
+      <div class="stat-card">
+        <span class="stat-title">Storage</span>
+        <span class="stat-value">Memory</span>
       </div>
-    </section>
 
-    <section class="panel">
-      <h2>Consultar árbol</h2>
-
-      <label for="queryRootId">ID raíz a consultar</label>
-      <input id="queryRootId" type="number" placeholder="Ej: 1" />
-
-      <div class="button-row">
-        <button onclick="getTree()">Obtener árbol</button>
-        <button onclick="runDfs()">DFS</button>
-        <button onclick="runBfs()">BFS</button>
-        <button onclick="getHeight()">Altura</button>
-        <button onclick="validateTree()">Validar</button>
+      <div class="stat-card">
+        <span class="stat-title">Strategy</span>
+        <span class="stat-value">Custom</span>
       </div>
-    </section>
 
-    <section class="panel wide">
-      <h2>Árbol visual</h2>
-      <div id="treeView" class="tree-box">Aún no hay árbol cargado.</div>
-    </section>
+      <div class="stat-card">
+        <span class="stat-title">Estado</span>
+        <span class="stat-value success-text">Activo</span>
+      </div>
 
-    <section class="panel wide">
-      <h2>Resultado</h2>
-      <pre id="resultBox">Sin resultados todavía.</pre>
-    </section>
-  </main>
+      <div class="stat-card">
+        <span class="stat-title">API</span>
+        <span class="stat-value">Spring Boot</span>
+      </div>
 
-  <script src="app.js"></script>
+    </div>
+
+    <p class="note">
+      Runtime switching controlado desde backend profiles.
+      Los selectores son únicamente informativos.
+    </p>
+
+  </section>
+
+  <!-- CREAR RAÍZ -->
+  <section class="panel">
+
+    <h2>🌱 Crear Raíz</h2>
+
+    <label for="rootId">ID raíz</label>
+    <input
+      id="rootId"
+      type="number"
+      placeholder="Ej: 100">
+
+    <label for="rootValue">Nombre raíz</label>
+    <input
+      id="rootValue"
+      type="text"
+      placeholder="Ej: Menú Principal">
+
+    <button
+      class="btn-create"
+      onclick="createRoot()">
+      Crear raíz
+    </button>
+
+  </section>
+
+  <!-- AGREGAR HIJO -->
+  <section class="panel">
+
+    <h2>➕ Agregar Hijo</h2>
+
+    <label for="parentId">ID padre</label>
+    <input
+      id="parentId"
+      type="number"
+      placeholder="Ej: 100">
+
+    <label for="childId">ID hijo</label>
+    <input
+      id="childId"
+      type="number"
+      placeholder="Ej: 101">
+
+    <label for="childValue">Nombre hijo</label>
+    <input
+      id="childValue"
+      type="text"
+      placeholder="Ej: Comida Guatemalteca">
+
+    <button
+      class="btn-create"
+      onclick="addChild()">
+      Agregar hijo
+    </button>
+
+  </section>
+
+  <!-- ACTUALIZAR NODO -->
+  <section class="panel">
+
+    <h2>✏️ Actualizar Nodo</h2>
+
+    <label for="updateNodeId">ID nodo</label>
+    <input
+      id="updateNodeId"
+      type="number"
+      placeholder="Ej: 101">
+
+    <label for="updateNodeValue">Nuevo nombre</label>
+    <input
+      id="updateNodeValue"
+      type="text"
+      placeholder="Ej: Comida Típica">
+
+    <button
+      class="btn-update"
+      onclick="updateNode()">
+      Actualizar
+    </button>
+
+  </section>
+
+  <!-- ELIMINAR NODO -->
+  <section class="panel">
+
+    <h2>🗑️ Eliminar Nodo</h2>
+
+    <label for="deleteNodeId">ID nodo</label>
+    <input
+      id="deleteNodeId"
+      type="number"
+      placeholder="Ej: 103">
+
+    <button
+      class="btn-delete"
+      onclick="deleteNode()">
+      Eliminar nodo
+    </button>
+
+  </section>
+
+  <!-- OPERACIONES DEL ÁRBOL -->
+  <section class="panel wide">
+
+    <h2>🌳 Operaciones del Árbol</h2>
+
+    <label for="queryRootId">ID raíz</label>
+    <input
+      id="queryRootId"
+      type="number"
+      placeholder="Ej: 100">
+
+    <div class="button-row">
+
+      <button class="btn-query" onclick="getTree()">
+        Obtener Árbol
+      </button>
+
+      <button class="btn-query" onclick="runDfs()">
+        DFS
+      </button>
+
+      <button class="btn-query" onclick="runBfs()">
+        BFS
+      </button>
+
+      <button class="btn-query" onclick="getHeight()">
+        Altura
+      </button>
+
+      <button class="btn-query" onclick="validateTree()">
+        Validar
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- VISUALIZACIÓN -->
+  <section class="panel wide">
+
+    <h2>🌲 Visualización del Árbol</h2>
+
+    <div id="treeView" class="tree-box">
+      Aún no hay árbol cargado.
+    </div>
+
+  </section>
+
+  <!-- CONSULTAS DE NODO -->
+  <section class="panel wide">
+
+    <h2>🔎 Consultas de Nodo</h2>
+
+    <label for="nodeActionId">
+      ID nodo para consultar
+    </label>
+
+    <input
+      id="nodeActionId"
+      type="number"
+      placeholder="Ej: 100">
+
+    <div class="button-row">
+
+      <button
+        class="btn-query"
+        onclick="getChildren()">
+        Hijos Directos
+      </button>
+
+      <button
+        class="btn-query"
+        onclick="checkExists()">
+        Existe
+      </button>
+
+    </div>
+
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="panel wide">
+
+    <h2>💻 Consola de Resultados</h2>
+
+    <pre id="resultBox">Esperando operaciones...</pre>
+
+  </section>
+
+</main>
+
+<script src="app.js"></script>
+
 </body>
 </html>
