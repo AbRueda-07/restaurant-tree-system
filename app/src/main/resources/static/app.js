@@ -277,3 +277,68 @@ function createNodeElement(node) {
   ul.appendChild(li);
   return ul;
 }
+
+async function getDepth() {
+
+    try {
+
+        const id = getNumberInput(
+            "advancedNodeId",
+            "ID nodo"
+        );
+
+        const result = await requestJson(
+            `${API_BASE}/${id}/depth`
+        );
+
+        showResult(
+            `Profundidad del nodo ${id}: ${result}`
+        );
+
+    } catch (error) {
+
+        showError(error);
+    }
+}
+
+async function getAncestors() {
+
+    try {
+
+        const id = getNumberInput(
+            "advancedNodeId",
+            "ID nodo"
+        );
+
+        const result = await requestJson(
+            `${API_BASE}/${id}/ancestors`
+        );
+
+        showResult(result);
+
+    } catch (error) {
+
+        showError(error);
+    }
+}
+
+async function getPath() {
+
+    try {
+
+        const id = getNumberInput(
+            "advancedNodeId",
+            "ID nodo"
+        );
+
+        const result = await requestJson(
+            `${API_BASE}/${id}/path`
+        );
+
+        showResult(result);
+
+    } catch (error) {
+
+        showError(error);
+    }
+}

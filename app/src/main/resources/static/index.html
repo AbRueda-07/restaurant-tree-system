@@ -230,6 +230,37 @@
     </div>
 
   </section>
+  
+  <section class="panel wide">
+
+      <h2>🧭 Consultas Avanzadas</h2>
+
+      <label for="advancedNodeId">
+          ID nodo
+      </label>
+
+      <input
+          id="advancedNodeId"
+          type="number"
+          placeholder="Ej: 103">
+
+      <div class="button-row">
+
+          <button class="btn-query" onclick="getDepth()">
+              Depth
+          </button>
+
+          <button class="btn-query" onclick="getAncestors()">
+              Ancestors
+          </button>
+
+          <button class="btn-query" onclick="getPath()">
+              Path
+          </button>
+
+      </div>
+
+  </section>
 
   <!-- RESULTADOS -->
   <section class="panel wide">

@@ -102,4 +102,29 @@ public class TreeController {
     public boolean exists(@PathVariable Long id) {
         return treeService.exists(id);
     }
+    
+    @GetMapping("/{id}/depth")
+    public int depth(@PathVariable Long id) {
+        return treeService.depth(id);
+    }
+
+    @GetMapping("/{id}/ancestors")
+    public List<TraversalNodeResponse> ancestors(@PathVariable Long id) {
+
+        List<TreeNode> nodes = treeService.ancestors(id);
+
+        return nodes.stream()
+                .map(NodeResponseMapper::toTraversalDto)
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/{id}/path")
+    public List<TraversalNodeResponse> path(@PathVariable Long id) {
+
+        List<TreeNode> nodes = treeService.path(id);
+
+        return nodes.stream()
+                .map(NodeResponseMapper::toTraversalDto)
+                .collect(Collectors.toList());
+    }
 }
