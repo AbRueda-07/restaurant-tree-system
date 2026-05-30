@@ -44,3 +44,6 @@ Pending:
 - MongoDB persistence
 - Frontend visualization
 - End-to-end testing
+
+
+Actualización realizada por J-Oslee19 para validación de contribución.
