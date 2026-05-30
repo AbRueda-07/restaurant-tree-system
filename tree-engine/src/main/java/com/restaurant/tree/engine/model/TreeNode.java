@@ -43,7 +43,6 @@ public class TreeNode {
     public void setParent(TreeNode parent) {
         this.parent = parent;
     }
-
     public List<TreeNode> getChildren() {
         return children;
     }

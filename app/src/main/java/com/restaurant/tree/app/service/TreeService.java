@@ -216,6 +216,53 @@ public class TreeService {
 
         return null;
     }
+    
+    public int depth(Long id) {
+
+        TreeNode node = findById(id);
+
+        if (node == null) {
+            throw new IllegalArgumentException(
+                    "No se encontró el nodo con ID: " + id);
+        }
+
+        return strategy.calculateDepth(node);
+    }
+    
+    public List<TreeNode> ancestors(Long id) {
+
+        TreeNode node = findById(id);
+
+        if (node == null) {
+            throw new IllegalArgumentException(
+                    "No se encontró el nodo con ID: " + id);
+        }
+
+        return strategy.getAncestors(node);
+    }
+    
+    public List<TreeNode> path(Long id) {
+
+        TreeNode node = findById(id);
+
+        if (node == null) {
+            throw new IllegalArgumentException(
+                    "No se encontró el nodo con ID: " + id);
+        }
+
+        List<TreeNode> path = new java.util.ArrayList<>();
+
+        TreeNode current = node;
+
+        while (current != null) {
+
+            path.add(0, current);
+
+            current = current.getParent();
+        }
+
+        return path;
+    }
 
     private int countNodes(TreeNode node) {
 
@@ -252,5 +299,7 @@ public class TreeService {
             this.root = root;
             this.node = node;
         }
+        
+        
     }
 }
