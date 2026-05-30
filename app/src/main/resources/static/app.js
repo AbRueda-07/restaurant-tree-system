@@ -132,9 +132,12 @@ async function updateNode() {
 
 async function deleteNode() {
   try {
-    const id = getNumberInput("nodeActionId", "ID nodo");
 
-    const confirmed = confirm(`¿Seguro que deseas eliminar el nodo con ID ${id}?`);
+    const id = getNumberInput("deleteNodeId", "ID nodo");
+
+    const confirmed = confirm(
+      `¿Seguro que deseas eliminar el nodo con ID ${id}?`
+    );
 
     if (!confirmed) {
       showResult("Eliminación cancelada.");
@@ -148,11 +151,14 @@ async function deleteNode() {
     showResult(`Nodo con ID ${id} eliminado correctamente.`);
 
     const rootId = document.getElementById("queryRootId").value;
+
     if (rootId && Number(rootId) !== id) {
       await getTree();
     } else {
-      document.getElementById("treeView").textContent = "Árbol eliminado o sin datos cargados.";
+      document.getElementById("treeView").textContent =
+        "Árbol eliminado o sin datos cargados.";
     }
+
   } catch (error) {
     showError(error);
   }
@@ -164,11 +170,13 @@ async function getChildren() {
 
     const data = await requestJson(`${API_BASE}/${id}/children`);
 
-    showResult(data);
-
     if (Array.isArray(data) && data.length === 0) {
       showResult(`El nodo con ID ${id} no tiene hijos directos.`);
+      return;
     }
+
+    showResult(data);
+
   } catch (error) {
     showError(error);
   }
@@ -181,11 +189,11 @@ async function checkExists() {
     const data = await requestJson(`${API_BASE}/${id}/exists`);
 
     showResult(`El nodo con ID ${id} existe: ${data}`);
+
   } catch (error) {
     showError(error);
   }
 }
-
 async function getTree() {
   try {
     const rootId = getNumberInput("queryRootId", "ID raíz a consultar");
